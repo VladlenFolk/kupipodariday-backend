@@ -7,7 +7,6 @@ import {
   Req,
   Param,
   UseGuards,
-  UsePipes,
 } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common/exceptions';
 import { UsersService } from './users.service';
@@ -18,7 +17,6 @@ import { Wish } from 'src/wishes/entities/wish.entity';
 import { USER_DOES_NOT_EXIST } from 'src/utils/constants/constants';
 import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { FindUserDto } from './dto/find-user.dto';
-import { ValidationPipe } from 'src/pipes/validation.pipe';
 
 @UseGuards(JwtGuard)
 @Controller('users')
@@ -42,7 +40,6 @@ export class UsersController {
     return profile;
   }
 
-  @UsePipes(ValidationPipe)
   @Patch('me')
   updateUser(
     @Body() updateUserDto: UpdateUserDto,

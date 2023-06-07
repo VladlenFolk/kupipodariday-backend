@@ -16,6 +16,7 @@ export class CreateWishDto {
 
   @IsString({ message: 'Должно быть строкой' })
   @IsNotEmpty()
+  @IsUrl({ message: 'Не корректный URL' })
   link: string;
 
   @IsUrl({ message: 'Не корректный URL' })

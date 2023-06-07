@@ -8,26 +8,23 @@ import {
   Param,
   Delete,
   UseGuards,
-  UsePipes,
   ForbiddenException,
 } from '@nestjs/common';
 import { WishesService } from './wishes.service';
 import { CreateWishDto } from './dto/create-wish.dto';
 import { UpdateWishDto } from './dto/update-wish.dto';
 import { JwtGuard } from 'src/auth/jwt/jwt.guard';
-import { ValidationPipe } from 'src/pipes/validation.pipe';
 import { Wish } from './entities/wish.entity';
 import {
   INVALID_WISH_OWNER,
   RAISED_ALREADY_EXISTS,
 } from 'src/utils/constants/constants';
 
-@UseGuards(JwtGuard)
 @Controller('wishes')
 export class WishesController {
   constructor(private readonly wishesService: WishesService) {}
 
-  @UsePipes(ValidationPipe)
+  @UseGuards(JwtGuard)
   @Post()
   async createWish(@Body() createWishDto: CreateWishDto, @Req() req) {
     return await this.wishesService.create(req.user, createWishDto);
@@ -43,11 +40,13 @@ export class WishesController {
     return await this.wishesService.getWishesTop();
   }
 
+  @UseGuards(JwtGuard)
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<Wish> {
     return await this.wishesService.getWishById(id);
   }
-  @UsePipes(ValidationPipe)
+
+  @UseGuards(JwtGuard)
   @Patch(':id')
   async update(
     @Param('id') id: number,
@@ -64,11 +63,13 @@ export class WishesController {
     return await this.wishesService.updateWish(Number(id), updateWishDto);
   }
 
+  @UseGuards(JwtGuard)
   @Delete(':id')
   remove(@Param('id') id: string, @Req() req) {
     return this.wishesService.remove(Number(id), req.user.id);
   }
 
+  @UseGuards(JwtGuard)
   @Post(':id/copy')
   public async copyWish(@Req() req, @Param('id') id: number) {
     const wish = await this.wishesService.getWishById(id);

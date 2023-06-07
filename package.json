@@ -1,8 +1,8 @@
 {
   "name": "kupipodariday-backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "This project about Nest.js",
+  "author": "Vladlen",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
